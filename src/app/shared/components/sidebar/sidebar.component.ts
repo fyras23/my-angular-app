@@ -7,9 +7,8 @@ interface NavItem {
   label: string;
   icon: string;
   route: string;
-  dashboard?: string;   // matches canAccess() key
+  dashboard?: string;
   adminOnly?: boolean;
-  homeOnly?: boolean;   // only show to admin
 }
 
 @Component({
@@ -24,7 +23,7 @@ export class SidebarComponent implements OnInit {
   currentUser: User | null = null;
 
   navItems: NavItem[] = [
-    { label: 'Home',        icon: 'home',          route: '/home',        homeOnly: true },
+    { label: 'Home',        icon: 'home',          route: '/home' },
     { label: 'Competition', icon: 'emoji_events',  route: '/competition', dashboard: 'competition' },
     { label: 'Performance', icon: 'trending_up',   route: '/performance', dashboard: 'performance' },
     { label: 'Tournaments', icon: 'calendar_today',route: '/tournaments', dashboard: 'tournaments' },
@@ -61,9 +60,8 @@ export class SidebarComponent implements OnInit {
   get visibleNavItems(): NavItem[] {
     return this.navItems.filter(item => {
       if (item.adminOnly) return this.authService.isAdmin();
-      if (item.homeOnly) return this.authService.isAdmin();
       if (item.dashboard) return this.authService.canAccess(item.dashboard);
-      return true;
+      return true; // Home is visible to everyone
     });
   }
 

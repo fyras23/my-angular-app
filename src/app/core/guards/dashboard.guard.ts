@@ -11,7 +11,7 @@ export class DashboardGuard implements CanActivate {
     if (this.authService.canAccess(required)) {
       return true;
     }
-    const userDash = this.authService.getDashboard();
-    return this.router.createUrlTree([userDash ? `/${userDash}` : '/home']);
+    // Redirect to home — user will see the animated court and can click their hotspot
+    return this.router.createUrlTree(['/home']);
   }
 }

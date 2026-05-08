@@ -86,12 +86,11 @@ export class AuthService {
     return this.isAdmin() || this.getDashboard() === dashboard;
   }
 
-  /** Returns the post-login redirect route */
+  /** Returns the post-login redirect route — everyone goes to /home */
   getHomeRoute(): string {
     const user = this.getUser();
     if (!user) return '/login';
-    if (user.role === 'admin') return '/home';
-    return `/${user.dashboard ?? 'home'}`;
+    return '/home';
   }
 
   clearTokens(): void {
