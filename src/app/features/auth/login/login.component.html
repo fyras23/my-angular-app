@@ -1,0 +1,65 @@
+<div class="login-page">
+  <div class="login-card">
+    <!-- Logo -->
+    <div class="login-logo">
+      <div class="logo-icon">
+        <mat-icon>sports_tennis</mat-icon>
+      </div>
+      <h1 class="login-title">Padel Analytics</h1>
+      <p class="login-tagline">Data That Plays To Win</p>
+    </div>
+
+    <!-- Error -->
+    <div class="error-banner" *ngIf="error">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ error }}</span>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
+      <div class="field-wrap">
+        <mat-icon class="field-icon">email</mat-icon>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Email address"
+          class="field-input"
+          autocomplete="email"
+        />
+      </div>
+      <div class="field-wrap">
+        <mat-icon class="field-icon">lock</mat-icon>
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          placeholder="Password"
+          class="field-input"
+          autocomplete="current-password"
+        />
+        <button type="button" class="toggle-pw" (click)="showPassword = !showPassword">
+          <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </div>
+
+      <label class="remember-me">
+        <input type="checkbox" formControlName="rememberMe" />
+        <span>Remember me</span>
+      </label>
+
+      <button type="submit" class="signin-btn" [disabled]="loading || form.invalid">
+        <mat-spinner *ngIf="loading" diameter="20" class="btn-spinner"></mat-spinner>
+        <span *ngIf="!loading">Sign In</span>
+        <span *ngIf="loading">Signing in...</span>
+      </button>
+    </form>
+
+    <!-- Demo hint -->
+    <div class="demo-hint">
+      <mat-icon>info_outline</mat-icon>
+      <div class="demo-credentials">
+        <span><strong>Admin:</strong> admin@padel.com / Admin123!</span>
+        <span><strong>User:</strong> competition@padel.com / Competition123!</span>
+      </div>
+    </div>
+  </div>
+</div>

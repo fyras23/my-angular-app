@@ -1,0 +1,51 @@
+<!-- Filter Panel -->
+<app-filter-panel [config]="filterConfig" (filtersChanged)="onFiltersChanged($event)"></app-filter-panel>
+
+<!-- Error Banner -->
+<div class="error-banner" *ngIf="error">
+  <mat-icon>error_outline</mat-icon>
+  <span>{{ error }}</span>
+  <button (click)="loadData()">Retry</button>
+</div>
+
+<!-- ROW 1: KPI Cards -->
+<div class="kpi-row">
+  <app-kpi-card label="Avg Players / Tournament" [value]="playersPerTournament" icon="people" iconBg="#E3F2FD" iconColor="#1565C0" [loading]="loading"></app-kpi-card>
+  <app-kpi-card label="Win Rate %" [value]="winRate + '%'" icon="emoji_events" iconBg="#E8F5E9" iconColor="#2E7D32" [loading]="loading"></app-kpi-card>
+  <app-kpi-card label="Total Prize Money" [value]="totalPrizeFmt" icon="monetization_on" iconBg="#FFF3E0" iconColor="#E65100" [loading]="loading"></app-kpi-card>
+</div>
+
+<!-- ROW 2: Prize by Category + Donut -->
+<div class="row-2">
+  <div>
+    <app-chart-card title="Prize Money by Category" icon="bar_chart" [height]="300" [loading]="loading">
+      <canvas id="prizeCatChart" height="300"></canvas>
+    </app-chart-card>
+  </div>
+  <div>
+    <app-chart-card title="Tournaments by Category" icon="donut_large" [height]="300" [loading]="loading">
+      <canvas id="catDonutChart" height="300"></canvas>
+    </app-chart-card>
+  </div>
+</div>
+
+<!-- ROW 3: Top 10 + Dual Axis -->
+<div class="row-3">
+  <div class="col-7">
+    <app-chart-card title="Top 10 Tournaments by Prize Money" icon="leaderboard" [height]="340" [loading]="loading">
+      <canvas id="top10TournChart" height="340"></canvas>
+    </app-chart-card>
+  </div>
+  <div class="col-5">
+    <app-chart-card title="Players & Prize by Category" icon="bar_chart" [height]="340" [loading]="loading">
+      <canvas id="dualAxisChart" height="340"></canvas>
+    </app-chart-card>
+  </div>
+</div>
+
+<!-- ROW 4: Prize by Country -->
+<div class="row-4">
+  <app-chart-card title="Prize Money by Country" icon="public" [height]="280" [loading]="loading">
+    <canvas id="countryPrizeChart" height="280"></canvas>
+  </app-chart-card>
+</div>

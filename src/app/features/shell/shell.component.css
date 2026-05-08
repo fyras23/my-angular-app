@@ -1,0 +1,35 @@
+.shell-layout {
+  display: flex;
+  min-height: 100vh;
+}
+.shell-main {
+  flex: 1;
+  margin-left: 260px;
+  transition: margin-left 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #E3F2FD;
+}
+.shell-main.sidebar-collapsed {
+  margin-left: 70px;
+}
+.shell-content {
+  flex: 1;
+  padding: 24px;
+  animation: fadeIn 0.3s ease;
+}
+.shell-content.home-page {
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 767px) {
+  .shell-main { margin-left: 0; }
+  .shell-main.sidebar-collapsed { margin-left: 0; }
+}

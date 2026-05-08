@@ -1,0 +1,9 @@
+<div class="shell-layout">
+  <app-sidebar (collapsed)="onSidebarCollapsed($event)"></app-sidebar>
+  <div class="shell-main" [class.sidebar-collapsed]="sidebarCollapsed">
+    <app-topbar [pageTitle]="pageTitle" (toggleSidebar)="sidebarCollapsed = !sidebarCollapsed"></app-topbar>
+    <main class="shell-content" [class.home-page]="isHomePage">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

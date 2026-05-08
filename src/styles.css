@@ -1,1 +1,54 @@
-/* You can add global styles to this file, and also import other style files */
+/* Import Angular Material theme */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Google Fonts - Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+/* CSS Variables */
+:root {
+  --primary: #1565C0;
+  --primary-dark: #0d47a1;
+  --secondary: #42A5F5;
+  --accent: #E91E8C;
+  --bg: #E3F2FD;
+  --surface: #FFFFFF;
+  --text: #212121;
+  --muted: #757575;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #BBDEFB; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #1565C0; }
+
+/* Snackbar overrides */
+.snack-success .mdc-snackbar__surface { background: #2E7D32 !important; }
+.snack-error .mdc-snackbar__surface { background: #C62828 !important; }
+
+/* Material overrides */
+.mat-mdc-raised-button.mat-primary {
+  background: linear-gradient(135deg, #1565C0, #42A5F5) !important;
+}
+
+/* Chart.js canvas */
+canvas {
+  display: block;
+  max-width: 100%;
+}

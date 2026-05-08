@@ -1,0 +1,11 @@
+<header class="topbar">
+  <button class="hamburger" (click)="toggleSidebar.emit()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h2 class="page-title">{{ pageTitle }}</h2>
+  <div class="topbar-right">
+    <span class="role-badge" [class.admin]="authService.isAdmin()">
+      {{ authService.isAdmin() ? 'Admin' : 'User' }}
+    </span>
+  </div>
+</header>

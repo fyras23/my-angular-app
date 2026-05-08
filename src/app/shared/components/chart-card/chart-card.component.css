@@ -1,0 +1,41 @@
+.chart-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(21, 101, 192, 0.10);
+  overflow: hidden;
+}
+.chart-header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #E3F2FD;
+}
+.chart-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chart-icon {
+  color: #1565C0;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+.chart-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #212121;
+}
+.chart-body {
+  padding: 16px;
+  position: relative;
+}
+.skeleton-chart {
+  border-radius: 8px;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

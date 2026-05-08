@@ -1,0 +1,50 @@
+<!-- Filter Panel -->
+<app-filter-panel [config]="filterConfig" (filtersChanged)="onFiltersChanged($event)"></app-filter-panel>
+
+<!-- Error Banner -->
+<div class="error-banner" *ngIf="error">
+  <mat-icon>error_outline</mat-icon>
+  <span>{{ error }}</span>
+  <button (click)="loadData()">Retry</button>
+</div>
+
+<!-- ROW 1: KPI Cards -->
+<div class="kpi-row">
+  <app-kpi-card label="Total Players" [value]="totalPlayers" icon="people" iconBg="#E3F2FD" iconColor="#1565C0" [loading]="loading"></app-kpi-card>
+  <app-kpi-card label="Revenue 2025" [value]="revenue2025Fmt" icon="attach_money" iconBg="#E8F5E9" iconColor="#2E7D32" [loading]="loading"></app-kpi-card>
+  <app-kpi-card label="Revenue 2024" [value]="revenue2024Fmt" icon="attach_money" iconBg="#FFF3E0" iconColor="#E65100" [loading]="loading"></app-kpi-card>
+  <app-kpi-card label="Total Matches" [value]="totalMatchesFmt" icon="sports_esports" iconBg="#EDE7F6" iconColor="#6A1B9A" [loading]="loading"></app-kpi-card>
+</div>
+
+<!-- ROW 2: Outcomes + Gender -->
+<div class="row-2">
+  <div class="col-8">
+    <app-chart-card title="Match Outcomes Over Last Two Years" icon="bar_chart" [height]="300" [loading]="loading">
+      <canvas id="outcomesChart" height="300"></canvas>
+    </app-chart-card>
+  </div>
+  <div class="col-4">
+    <app-chart-card title="Women vs Men Players" icon="people" [height]="300" [loading]="loading">
+      <canvas id="genderChart" height="300"></canvas>
+    </app-chart-card>
+  </div>
+</div>
+
+<!-- ROW 3: Periods + Countries + Win Rate -->
+<div class="row-3">
+  <div class="col-5">
+    <app-chart-card title="Top 3 Periods of Matches" icon="calendar_today" [height]="260" [loading]="loading">
+      <canvas id="periodsChart" height="260"></canvas>
+    </app-chart-card>
+  </div>
+  <div class="col-4">
+    <app-chart-card title="Top 5 Countries by Tournaments" icon="public" [height]="260" [loading]="loading">
+      <canvas id="countriesChart" height="260"></canvas>
+    </app-chart-card>
+  </div>
+  <div class="col-3">
+    <app-chart-card title="Win Rate %" icon="emoji_events" [height]="260" [loading]="loading">
+      <app-gauge-chart [value]="winRate" label="Win Rate" color="#1565C0" [loading]="loading"></app-gauge-chart>
+    </app-chart-card>
+  </div>
+</div>

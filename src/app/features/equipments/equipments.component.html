@@ -1,0 +1,44 @@
+<!-- Filter Panel -->
+<app-filter-panel [config]="filterConfig" (filtersChanged)="onFiltersChanged($event)"></app-filter-panel>
+
+<!-- Error Banner -->
+<div class="error-banner" *ngIf="error">
+  <mat-icon>error_outline</mat-icon>
+  <span>{{ error }}</span>
+  <button (click)="loadData()">Retry</button>
+</div>
+
+<!-- ROW 1: KPI Cards -->
+<div class="kpi-row">
+  <app-kpi-card label="Market Revenue" [value]="marketRevenueFmt" icon="store" iconBg="#E3F2FD" iconColor="#1565C0" [loading]="loading"></app-kpi-card>
+  <app-kpi-card label="Product Revenue" [value]="productRevenueFmt" icon="inventory_2" iconBg="#E8F5E9" iconColor="#2E7D32" [loading]="loading"></app-kpi-card>
+  <app-kpi-card label="Active Players" [value]="activePlayers" icon="people" iconBg="#FFF3E0" iconColor="#E65100" [loading]="loading"></app-kpi-card>
+</div>
+
+<!-- ROW 2: Revenue by Vendor + Scatter -->
+<div class="row-2">
+  <div class="col-7">
+    <app-chart-card title="Revenue by Vendor (2023–2025)" icon="bar_chart" [height]="320" [loading]="loading">
+      <canvas id="vendorRevenueChart" height="320"></canvas>
+    </app-chart-card>
+  </div>
+  <div class="col-5">
+    <app-chart-card title="Equipment Performance by Price" icon="scatter_plot" [height]="320" [loading]="loading">
+      <canvas id="scatterChart" height="320"></canvas>
+    </app-chart-card>
+  </div>
+</div>
+
+<!-- ROW 3: Top 5 Vendors + Racket Performance -->
+<div class="row-2">
+  <div>
+    <app-chart-card title="Top 5 Vendor Revenue (Yearly Growth)" icon="leaderboard" [height]="320" [loading]="loading">
+      <canvas id="top5VendorChart" height="320"></canvas>
+    </app-chart-card>
+  </div>
+  <div>
+    <app-chart-card title="Racket Performance vs Target" icon="sports_tennis" [height]="320" [loading]="loading">
+      <canvas id="racketChart" height="320"></canvas>
+    </app-chart-card>
+  </div>
+</div>

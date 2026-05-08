@@ -1,0 +1,324 @@
+<div class="home-container" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
+
+  <!-- ── HERO TEXT ─────────────────────────────────────────────────────── -->
+  <div class="hero-text">
+    <h1 class="welcome-title">
+      Welcome back,
+      <span class="username-gradient">{{ currentUser?.username }}</span> 👋
+    </h1>
+    <p class="tagline">Padel Analytics — <em>Data That Plays To Win</em></p>
+    <p class="subtitle" *ngIf="currentUser?.role === 'user'">
+      Your dashboard:
+      <span class="dash-badge" [style.background]="dashboardBadgeColor">
+        {{ currentUser?.dashboard }}
+      </span>
+    </p>
+    <p class="subtitle" *ngIf="currentUser?.role === 'admin'">
+      <span class="admin-badge">
+        <span class="admin-dot"></span>Admin Access — All Dashboards Available
+      </span>
+    </p>
+  </div>
+
+  <!-- ── COURT CONTAINER ───────────────────────────────────────────────── -->
+  <div class="court-container" #courtContainer
+       [style.transform]="courtTransform"
+       [class.easter-egg]="easterEggActive">
+
+    <svg class="court-svg"
+         viewBox="0 0 1000 500"
+         xmlns="http://www.w3.org/2000/svg"
+         role="img"
+         aria-label="Interactive Padel court dashboard">
+
+      <defs>
+        <!-- Court surface gradient -->
+        <linearGradient id="courtGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#1a6bb5;stop-opacity:1" />
+          <stop offset="50%" style="stop-color:#1976D2;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#1565C0;stop-opacity:1" />
+        </linearGradient>
+
+        <!-- Glass wall gradient -->
+        <linearGradient id="glassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#90CAF9;stop-opacity:0.25" />
+          <stop offset="100%" style="stop-color:#42A5F5;stop-opacity:0.08" />
+        </linearGradient>
+
+        <!-- Ball glow filter -->
+        <filter id="ballGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+
+        <!-- Court shadow -->
+        <filter id="courtShadow" x="-5%" y="-5%" width="110%" height="120%">
+          <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="rgba(21,101,192,0.35)"/>
+        </filter>
+
+        <!-- Hotspot glow -->
+        <filter id="hotGlow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="8" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+
+        <!-- Radial gradients for each hotspot -->
+        <radialGradient id="hsGrad0" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" style="stop-color:#42A5F5;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#1565C0;stop-opacity:1"/>
+        </radialGradient>
+        <radialGradient id="hsGrad1" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" style="stop-color:#4DB6AC;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#00897B;stop-opacity:1"/>
+        </radialGradient>
+        <radialGradient id="hsGrad2" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" style="stop-color:#CE93D8;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#6A1B9A;stop-opacity:1"/>
+        </radialGradient>
+        <radialGradient id="hsGrad3" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" style="stop-color:#FFAB91;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#E65100;stop-opacity:1"/>
+        </radialGradient>
+
+        <!-- Ball gradients -->
+        <radialGradient id="ballGrad0" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" style="stop-color:#FFF176"/>
+          <stop offset="100%" style="stop-color:#FF6D00"/>
+        </radialGradient>
+        <radialGradient id="ballGrad1" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" style="stop-color:#80D8FF"/>
+          <stop offset="100%" style="stop-color:#1565C0"/>
+        </radialGradient>
+        <radialGradient id="ballGrad2" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" style="stop-color:#F48FB1"/>
+          <stop offset="100%" style="stop-color:#880E4F"/>
+        </radialGradient>
+        <radialGradient id="ballGrad3" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" style="stop-color:#B9F6CA"/>
+          <stop offset="100%" style="stop-color:#00897B"/>
+        </radialGradient>
+        <radialGradient id="ballGrad4" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" style="stop-color:#FFD180"/>
+          <stop offset="100%" style="stop-color:#E65100"/>
+        </radialGradient>
+        <radialGradient id="ballGrad5" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" style="stop-color:#E1BEE7"/>
+          <stop offset="100%" style="stop-color:#6A1B9A"/>
+        </radialGradient>
+      </defs>
+
+      <!-- ── COURT SURFACE ─────────────────────────────────────────────── -->
+      <rect x="40" y="30" width="920" height="440" rx="18" ry="18"
+            fill="url(#courtGrad)" filter="url(#courtShadow)"/>
+
+      <!-- Court texture lines (subtle) -->
+      <rect x="40" y="30" width="920" height="440" rx="18" ry="18"
+            fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+      <!-- ── GLASS WALLS ────────────────────────────────────────────────── -->
+      <!-- Left wall -->
+      <rect x="40" y="30" width="60" height="440" rx="18" ry="0"
+            fill="url(#glassGrad)" stroke="rgba(144,202,249,0.4)" stroke-width="2"/>
+      <!-- Right wall -->
+      <rect x="900" y="30" width="60" height="440" rx="0" ry="18"
+            fill="url(#glassGrad)" stroke="rgba(144,202,249,0.4)" stroke-width="2"/>
+      <!-- Top wall -->
+      <rect x="40" y="30" width="920" height="50" rx="18" ry="0"
+            fill="url(#glassGrad)" stroke="rgba(144,202,249,0.4)" stroke-width="2"/>
+      <!-- Bottom wall -->
+      <rect x="40" y="420" width="920" height="50" rx="0" ry="18"
+            fill="url(#glassGrad)" stroke="rgba(144,202,249,0.4)" stroke-width="2"/>
+
+      <!-- Glass shine highlights -->
+      <line x1="55" y1="50" x2="55" y2="450" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="945" y1="50" x2="945" y2="450" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- ── COURT BOUNDARY LINES ───────────────────────────────────────── -->
+      <!-- Outer boundary -->
+      <rect x="100" y="80" width="800" height="340" rx="4"
+            fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5"/>
+
+      <!-- ── SERVICE BOXES ─────────────────────────────────────────────── -->
+      <!-- Top-left service box -->
+      <rect x="100" y="80" width="400" height="170" rx="2"
+            fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" stroke-dasharray="8,5"/>
+      <!-- Top-right service box -->
+      <rect x="500" y="80" width="400" height="170" rx="2"
+            fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" stroke-dasharray="8,5"/>
+      <!-- Bottom-left service box -->
+      <rect x="100" y="250" width="400" height="170" rx="2"
+            fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" stroke-dasharray="8,5"/>
+      <!-- Bottom-right service box -->
+      <rect x="500" y="250" width="400" height="170" rx="2"
+            fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" stroke-dasharray="8,5"/>
+
+      <!-- Center vertical line -->
+      <line x1="500" y1="80" x2="500" y2="420"
+            stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+      <!-- ── CENTER NET ─────────────────────────────────────────────────── -->
+      <!-- Net shadow -->
+      <line x1="100" y1="253" x2="900" y2="253"
+            stroke="rgba(0,0,0,0.2)" stroke-width="6" stroke-linecap="round"/>
+      <!-- Net main line -->
+      <line x1="100" y1="250" x2="900" y2="250"
+            stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"
+            class="net-line" (click)="onNetClick()" style="cursor:pointer"/>
+      <!-- Net posts -->
+      <circle cx="100" cy="250" r="6" fill="#FFFFFF" opacity="0.9"/>
+      <circle cx="900" cy="250" r="6" fill="#FFFFFF" opacity="0.9"/>
+      <!-- Net mesh lines -->
+      <g stroke="rgba(255,255,255,0.2)" stroke-width="1">
+        <line x1="200" y1="240" x2="200" y2="260"/>
+        <line x1="300" y1="240" x2="300" y2="260"/>
+        <line x1="400" y1="240" x2="400" y2="260"/>
+        <line x1="500" y1="240" x2="500" y2="260"/>
+        <line x1="600" y1="240" x2="600" y2="260"/>
+        <line x1="700" y1="240" x2="700" y2="260"/>
+        <line x1="800" y1="240" x2="800" y2="260"/>
+      </g>
+
+      <!-- ── ANIMATED BALLS ─────────────────────────────────────────────── -->
+      <g *ngFor="let ball of balls; trackBy: trackBall">
+        <!-- Ball glow -->
+        <circle
+          [attr.cx]="ball.x" [attr.cy]="ball.y"
+          [attr.r]="ball.radius + 6"
+          [attr.fill]="ball.glowColor"
+          opacity="0.25"
+          [style.opacity]="ball.opacity * 0.25"
+          filter="url(#ballGlow)"/>
+        <!-- Ball body -->
+        <circle
+          [attr.cx]="ball.x" [attr.cy]="ball.y"
+          [attr.r]="ball.radius"
+          [attr.fill]="'url(#ballGrad' + (ball.id % 6) + ')'"
+          stroke="rgba(255,255,255,0.7)" stroke-width="1.5"
+          [style.opacity]="ball.opacity"
+          [class.ball-exploding]="ball.exploding"
+          style="cursor:pointer; transition: opacity 0.4s ease;"
+          (mouseenter)="onBallHover(ball)"
+          (mouseleave)="onBallLeave()"
+          (click)="onBallClick(ball)"
+          [attr.aria-label]="'Data ball: ' + ball.stat"/>
+        <!-- Ball shine -->
+        <circle
+          [attr.cx]="ball.x - ball.radius * 0.3"
+          [attr.cy]="ball.y - ball.radius * 0.3"
+          [attr.r]="ball.radius * 0.3"
+          fill="rgba(255,255,255,0.5)"
+          [style.opacity]="ball.opacity"
+          style="pointer-events:none"/>
+      </g>
+
+      <!-- ── HOTSPOTS ───────────────────────────────────────────────────── -->
+      <g *ngFor="let hs of hotspots; let i = index; trackBy: trackHotspot"
+         class="hotspot-group"
+         [class.hotspot-hovered]="hs.hovered"
+         [class.hotspot-restricted]="!canAccess(hs.id)"
+         (mouseenter)="onHotspotHover(hs)"
+         (mouseleave)="onHotspotLeave(hs)"
+         (click)="navigateTo(hs)"
+         (keydown)="onHotspotKeydown($event, hs)"
+         [attr.tabindex]="0"
+         [attr.role]="'button'"
+         [attr.aria-label]="hs.label + ' dashboard' + (!canAccess(hs.id) ? ' (restricted)' : '')">
+
+        <!-- Pulse ring (outer) -->
+        <circle [attr.cx]="hs.cx" [attr.cy]="hs.cy" r="72"
+                [attr.fill]="hs.color" opacity="0.12"
+                class="pulse-ring-outer"/>
+        <!-- Pulse ring (inner) -->
+        <circle [attr.cx]="hs.cx" [attr.cy]="hs.cy" r="64"
+                [attr.fill]="hs.color" opacity="0.18"
+                class="pulse-ring-inner"/>
+
+        <!-- Main circle -->
+        <circle [attr.cx]="hs.cx" [attr.cy]="hs.cy" r="52"
+                [attr.fill]="'url(#hsGrad' + i + ')'"
+                stroke="rgba(255,255,255,0.6)" stroke-width="2.5"
+                filter="url(#hotGlow)"
+                class="hotspot-circle"/>
+
+        <!-- Emoji icon -->
+        <text [attr.x]="hs.cx" [attr.y]="hs.cy + 2"
+              text-anchor="middle" dominant-baseline="middle"
+              font-size="28" class="hotspot-emoji">{{ hs.emoji }}</text>
+
+        <!-- Label -->
+        <text [attr.x]="hs.cx" [attr.y]="hs.cy + 72"
+              text-anchor="middle" dominant-baseline="middle"
+              fill="white" font-size="13" font-weight="700"
+              font-family="Inter, sans-serif"
+              class="hotspot-label">{{ hs.label }}</text>
+
+        <!-- Lock icon for restricted -->
+        <g *ngIf="!canAccess(hs.id)">
+          <circle [attr.cx]="hs.cx + 36" [attr.cy]="hs.cy - 36" r="14"
+                  fill="#F44336" stroke="white" stroke-width="2"/>
+          <text [attr.x]="hs.cx + 36" [attr.y]="hs.cy - 34"
+                text-anchor="middle" dominant-baseline="middle"
+                font-size="14">🔒</text>
+        </g>
+      </g>
+
+      <!-- ── BALL TOOLTIP ───────────────────────────────────────────────── -->
+      <g *ngIf="hoveredBall && !hoveredBall.exploding">
+        <rect [attr.x]="hoveredBall.x + 14" [attr.y]="hoveredBall.y - 22"
+              width="190" height="32" rx="8"
+              fill="rgba(13,71,161,0.92)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <text [attr.x]="hoveredBall.x + 109" [attr.y]="hoveredBall.y - 2"
+              text-anchor="middle" dominant-baseline="middle"
+              fill="white" font-size="11" font-family="Inter, sans-serif" font-weight="600">
+          {{ hoveredBall.stat }}
+        </text>
+      </g>
+
+      <!-- ── HOTSPOT TOOLTIP ────────────────────────────────────────────── -->
+      <g *ngIf="hoveredHotspot">
+        <ng-container *ngFor="let stat of hoveredHotspot.stats; let si = index">
+          <rect [attr.x]="hoveredHotspot.cx - 110"
+                [attr.y]="hoveredHotspot.cy - 130 + si * 28"
+                width="220" height="24" rx="6"
+                fill="rgba(13,71,161,0.88)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <text [attr.x]="hoveredHotspot.cx"
+                [attr.y]="hoveredHotspot.cy - 118 + si * 28"
+                text-anchor="middle" dominant-baseline="middle"
+                fill="white" font-size="11" font-family="Inter, sans-serif" font-weight="500">
+            {{ stat }}
+          </text>
+        </ng-container>
+      </g>
+
+    </svg><!-- end SVG -->
+
+    <!-- Mobile fallback grid (no SVG balls on mobile) -->
+    <div class="mobile-hotspots" *ngIf="isMobile">
+      <div class="mobile-hs-card"
+           *ngFor="let hs of hotspots; trackBy: trackHotspot"
+           [class.restricted]="!canAccess(hs.id)"
+           (click)="navigateTo(hs)"
+           [style.border-color]="hs.color">
+        <span class="mobile-hs-emoji">{{ hs.emoji }}</span>
+        <span class="mobile-hs-label" [style.color]="hs.color">{{ hs.label }}</span>
+        <span class="mobile-hs-lock" *ngIf="!canAccess(hs.id)">🔒</span>
+      </div>
+    </div>
+
+  </div><!-- end court-container -->
+
+  <!-- ── STATS TICKER ───────────────────────────────────────────────────── -->
+  <div class="stats-ticker" role="marquee" aria-label="Live statistics ticker">
+    <div class="ticker-track">
+      <!-- Duplicate for seamless loop -->
+      <ng-container *ngFor="let _ of [1,2]">
+        <span class="ticker-item" *ngFor="let item of tickerItems; trackBy: trackTicker">
+          <span class="ticker-icon">{{ item.icon }}</span>
+          <span class="ticker-text">{{ item.text }}</span>
+          <span class="ticker-sep">•</span>
+        </span>
+      </ng-container>
+    </div>
+  </div>
+
+</div><!-- end home-container -->

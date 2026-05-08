@@ -1,0 +1,12 @@
+<div class="gauge-wrapper">
+  <ng-container *ngIf="loading; else gaugeContent">
+    <div class="skeleton-gauge"></div>
+  </ng-container>
+  <ng-template #gaugeContent>
+    <div class="gauge-canvas-wrap">
+      <canvas #gaugeCanvas></canvas>
+    </div>
+    <div class="gauge-value" [style.color]="color">{{ value }}%</div>
+    <div class="gauge-label">{{ label }}</div>
+  </ng-template>
+</div>

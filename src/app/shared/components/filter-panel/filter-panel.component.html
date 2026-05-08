@@ -1,0 +1,118 @@
+<div class="filter-panel">
+  <div class="filter-header" (click)="toggleExpand()">
+    <div class="filter-title">
+      <mat-icon>tune</mat-icon>
+      <span>Filters</span>
+    </div>
+    <mat-icon class="expand-icon" [class.rotated]="!isExpanded">expand_more</mat-icon>
+  </div>
+
+  <div class="filter-body" [class.collapsed]="!isExpanded">
+    <form [formGroup]="form" class="filter-form">
+
+      <!-- Year -->
+      <div class="filter-field" *ngIf="config.showYear && config.years?.length">
+        <label>Year</label>
+        <mat-select formControlName="year" placeholder="All years">
+          <mat-option [value]="null">All years</mat-option>
+          <mat-option *ngFor="let y of config.years" [value]="y">{{ y }}</mat-option>
+        </mat-select>
+      </div>
+
+      <!-- Country -->
+      <div class="filter-field" *ngIf="config.showCountry && config.countries?.length">
+        <label>Country</label>
+        <mat-select formControlName="country" placeholder="All countries">
+          <mat-option [value]="null">All countries</mat-option>
+          <mat-option *ngFor="let c of config.countries" [value]="c">{{ c }}</mat-option>
+        </mat-select>
+      </div>
+
+      <!-- Gender -->
+      <div class="filter-field" *ngIf="config.showGender && config.genders?.length">
+        <label>Gender</label>
+        <mat-select formControlName="gender" placeholder="All">
+          <mat-option [value]="null">All</mat-option>
+          <mat-option *ngFor="let g of config.genders" [value]="g">{{ g }}</mat-option>
+        </mat-select>
+      </div>
+
+      <!-- Category -->
+      <div class="filter-field" *ngIf="config.showCategory && config.categories?.length">
+        <label>Category</label>
+        <mat-select formControlName="category" placeholder="All categories">
+          <mat-option [value]="null">All categories</mat-option>
+          <mat-option *ngFor="let cat of config.categories" [value]="cat">{{ cat }}</mat-option>
+        </mat-select>
+      </div>
+
+      <!-- Vendor -->
+      <div class="filter-field" *ngIf="config.showVendor && config.vendors?.length">
+        <label>Vendor</label>
+        <mat-select formControlName="vendor" placeholder="All vendors">
+          <mat-option [value]="null">All vendors</mat-option>
+          <mat-option *ngFor="let v of config.vendors" [value]="v">{{ v }}</mat-option>
+        </mat-select>
+      </div>
+
+      <!-- Racket Type -->
+      <div class="filter-field" *ngIf="config.showRacketType && config.racketTypes?.length">
+        <label>Racket Type</label>
+        <mat-select formControlName="racket_type" placeholder="All types">
+          <mat-option [value]="null">All types</mat-option>
+          <mat-option *ngFor="let r of config.racketTypes" [value]="r">{{ r }}</mat-option>
+        </mat-select>
+      </div>
+
+      <!-- Game Level -->
+      <div class="filter-field" *ngIf="config.showGameLevel && config.gameLevels?.length">
+        <label>Game Level</label>
+        <mat-select formControlName="game_level" placeholder="All levels">
+          <mat-option [value]="null">All levels</mat-option>
+          <mat-option *ngFor="let l of config.gameLevels" [value]="l">{{ l }}</mat-option>
+        </mat-select>
+      </div>
+
+      <!-- Player Name -->
+      <div class="filter-field" *ngIf="config.showPlayerName">
+        <label>Player Name</label>
+        <input class="text-input" formControlName="player_name" placeholder="Search player..." />
+      </div>
+
+      <!-- Date From -->
+      <div class="filter-field" *ngIf="config.showDateRange">
+        <label>Date From</label>
+        <input class="text-input" type="date" formControlName="date_from" />
+      </div>
+
+      <!-- Date To -->
+      <div class="filter-field" *ngIf="config.showDateRange">
+        <label>Date To</label>
+        <input class="text-input" type="date" formControlName="date_to" />
+      </div>
+
+      <!-- Price Range -->
+      <div class="filter-field price-range" *ngIf="config.showPriceRange">
+        <label>Price Min (€)</label>
+        <input class="text-input" type="number" formControlName="price_min" [placeholder]="config.priceMin ?? 0" />
+      </div>
+      <div class="filter-field price-range" *ngIf="config.showPriceRange">
+        <label>Price Max (€)</label>
+        <input class="text-input" type="number" formControlName="price_max" [placeholder]="config.priceMax ?? 800" />
+      </div>
+
+      <!-- Actions -->
+      <div class="filter-actions">
+        <button type="button" class="btn-apply" (click)="apply()">
+          <mat-icon>search</mat-icon>
+          Apply Filters
+        </button>
+        <button type="button" class="btn-reset" (click)="reset()">
+          <mat-icon>refresh</mat-icon>
+          Reset
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
